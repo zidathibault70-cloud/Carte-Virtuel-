@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Banque.html</title>
+</head>
+<body>
+<p>&lt;!DOCTYPE html&gt;</p>
+<p>&lt;html lang=&quot;fr&quot;&gt;</p>
+<p>&lt;head&gt;</p>
+<p>    &lt;meta charset=&quot;UTF-8&quot;&gt;</p>
+<p>    &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;</p>
+<p>    &lt;title&gt;USA Virtual Bank&lt;/title&gt;</p>
+<p>    &lt;style&gt;</p>
+<p>        body { font-family: Arial, sans-serif; background: #0f172a; color: #fff; margin: 0; padding: 20px; display: flex; justify-content: center; align-items: center; min-height: 100vh; }</p>
+<p>        .container { background: #1e293b; padding: 25px; border-radius: 12px; width: 100%; max-width: 400px; box-shadow: 0 8px 20px rgba(0,0,0,0.5); }</p>
+<p>        h2 { text-align: center; color: #38bdf8; }</p>
+<p>        input, select { width: 100%; padding: 12px; margin: 10px 0; border-radius: 6px; border: 1px solid #475569; background: #334155; color: #fff; box-sizing: border-box; }</p>
+<p>        button { width: 100%; padding: 12px; background: #0284c7; color: white; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; margin-top: 10px; }</p>
+<p>        button:hover { background: #0369a1; }</p>
+<p>        .hidden { display: none; }</p>
+<p>        .card { background: linear-gradient(135deg, #1e3a8a, #3b82f6); padding: 20px; border-radius: 15px; margin-top: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }</p>
+<p>        .card-number { font-size: 20px; letter-spacing: 2px; margin: 15px 0; font-family: monospace; }</p>
+<p>        .admin-box { background: #334155; padding: 10px; border-radius: 6px; margin-top: 15px; font-size: 14px; }</p>
+<p>    &lt;/style&gt;</p>
+<p>&lt;/head&gt;</p>
+<p>&lt;body&gt;</p>
+<p><br></p>
+<p>&lt;div class=&quot;container&quot; id=&quot;app&quot;&gt;</p>
+<p>    &lt;h2&gt;USA Virtual Bank&lt;/h2&gt;</p>
+<p><br></p>
+<p>    &lt;!-- MENU ACCUEIL --&gt;</p>
+<p>    &lt;div id=&quot;step-home&quot;&gt;</p>
+<p>        &lt;p style=&quot;text-align:center; color:#94a3b8;&quot;&gt;Choisissez votre accès&lt;/p&gt;</p>
+<p>        &lt;button onclick=&quot;showClientLogin()&quot;&gt;Espace Client&lt;/button&gt;</p>
+<p>        &lt;button onclick=&quot;showAdminLogin()&quot; style=&quot;background: #475569;&quot;&gt;Accès Développeur&lt;/button&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br></p>
+<p>    &lt;!-- CONNEXION ADMIN --&gt;</p>
+<p>    &lt;div id=&quot;step-admin-login&quot; class=&quot;hidden&quot;&gt;</p>
+<p>        &lt;h3&gt;Admin / Développeur&lt;/h3&gt;</p>
+<p>        &lt;input type=&quot;password&quot; id=&quot;admin-code&quot; placeholder=&quot;Code secret développeur&quot;&gt;</p>
+<p>        &lt;button onclick=&quot;verifyAdmin()&quot;&gt;Se connecter&lt;/button&gt;</p>
+<p>        &lt;button onclick=&quot;goHome()&quot; style=&quot;background: transparent; color: #94a3b8;&quot;&gt;Retour&lt;/button&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br></p>
+<p>    &lt;!-- TABLEAU DE BORD ADMIN --&gt;</p>
+<p>    &lt;div id=&quot;step-admin-dashboard&quot; class=&quot;hidden&quot;&gt;</p>
+<p>        &lt;h3&gt;Panneau Développeur&lt;/h3&gt;</p>
+<p>        &lt;div id=&quot;admin-stats&quot; class=&quot;admin-box&quot;&gt;Chargement des inscrits...&lt;/div&gt;</p>
+<p>        &lt;button onclick=&quot;goHome()&quot; style=&quot;background: #ef4444;&quot;&gt;Déconnexion&lt;/button&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br></p>
+<p>    &lt;!-- ETAPE 1 CLIENT : INFOS --&gt;</p>
+<p>    &lt;div id=&quot;step-client-info&quot; class=&quot;hidden&quot;&gt;</p>
+<p>        &lt;h3&gt;Inscription / Connexion Client&lt;/h3&gt;</p>
+<p>        &lt;input type=&quot;text&quot; id=&quot;client-name&quot; placeholder=&quot;Nom complet&quot;&gt;</p>
+<p>        &lt;input type=&quot;tel&quot; id=&quot;client-phone&quot; placeholder=&quot;Numéro de téléphone&quot;&gt;</p>
+<p>        &lt;input type=&quot;email&quot; id=&quot;client-email&quot; placeholder=&quot;Adresse Email&quot;&gt;</p>
+<p>        </p>
+<p>        &lt;label style=&quot;font-size: 13px; color: #94a3b8;&quot;&gt;Envoyer le code de confirmation par :&lt;/label&gt;</p>
+<p>        &lt;select id=&quot;otp-channel&quot;&gt;</p>
+<p>            &lt;option value=&quot;sms&quot;&gt;SMS (Téléphone)&lt;/option&gt;</p>
+<p>            &lt;option value=&quot;email&quot;&gt;Email&lt;/option&gt;</p>
+<p>        &lt;/select&gt;</p>
+<p>        </p>
+<p>        &lt;button onclick=&quot;sendOtp()&quot;&gt;Recevoir le code&lt;/button&gt;</p>
+<p>        &lt;button onclick=&quot;goHome()&quot; style=&quot;background: transparent; color: #94a3b8;&quot;&gt;Retour&lt;/button&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br></p>
+<p>    &lt;!-- ETAPE 2 CLIENT : VALIDATION CODE &amp; CNI --&gt;</p>
+<p>    &lt;div id=&quot;step-client-verify&quot; class=&quot;hidden&quot;&gt;</p>
+<p>        &lt;h3&gt;Validation de Sécurité&lt;/h3&gt;</p>
+<p>        &lt;p id=&quot;otp-sent-msg&quot; style=&quot;font-size: 13px; color: #38bdf8;&quot;&gt;&lt;/p&gt;</p>
+<p>        &lt;input type=&quot;text&quot; id=&quot;entered-otp&quot; placeholder=&quot;Entrez le code reçu (ex: 1234)&quot;&gt;</p>
+<p>        &lt;input type=&quot;text&quot; id=&quot;client-cni&quot; placeholder=&quot;Numéro de Pièce d&#39;Identité (CNI / Passeport)&quot;&gt;</p>
+<p>        &lt;button onclick=&quot;validateAndCreateAccount()&quot;&gt;Valider et Créer mon Compte&lt;/button&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p><br></p>
+<p>    &lt;!-- ETAPE 3 CLIENT : CARTE BANCAIRE VIRTUELLE --&gt;</p>
+<p>    &lt;div id=&quot;step-client-card&quot; class=&quot;hidden&quot;&gt;</p>
+<p>        &lt;h3 style=&quot;color: #4ade80;&quot;&gt;Compte Actif (États-Unis)&lt;/h3&gt;</p>
+<p>        &lt;div class=&quot;card&quot;&gt;</p>
+<p>            &lt;div style=&quot;font-size: 12px; font-weight: bold;&quot;&gt;US VIRTUAL BANK LLC&lt;/div&gt;</p>
+<p>            &lt;div class=&quot;card-number&quot; id=&quot;card-num&quot;&gt;4000 1234 5678 9010&lt;/div&gt;</p>
+<p>            &lt;div style=&quot;display: flex; justify-content: space-between; font-size: 14px;&quot;&gt;</p>
+<p>                &lt;span id=&quot;card-holder&quot;&gt;NOM DU CLIENT&lt;/span&gt;</p>
+<p>                &lt;span&gt;USD &lt;span id=&quot;card-balance&quot;&gt;1,500.00&lt;/span&gt;&lt;/span&gt;</p>
+<p>            &lt;/div&gt;</p>
+<p>        &lt;/div&gt;</p>
+<p>        &lt;button onclick=&quot;goHome()&quot; style=&quot;margin-top: 20px; background: #ef4444;&quot;&gt;Quitter / Déconnexion&lt;/button&gt;</p>
+<p>    &lt;/div&gt;</p>
+<p>&lt;/div&gt;</p>
+<p><br></p>
+<p>&lt;script&gt;</p>
+<p>    let dbClients = [];</p>
+<p>    let tempUser = {};</p>
+<p>    let generatedOtp = &quot;&quot;;</p>
+<p>    const DEV_SECRET = &quot;DEV2026&quot;; // Code secret du développeur</p>
+<p><br></p>
+<p>    function hideAll() {</p>
+<p>        document.getElementById(&#39;step-home&#39;).classList.add(&#39;hidden&#39;);</p>
+<p>        document.getElementById(&#39;step-admin-login&#39;).classList.add(&#39;hidden&#39;);</p>
+<p>        document.getElementById(&#39;step-admin-dashboard&#39;).classList.add(&#39;hidden&#39;);</p>
+<p>        document.getElementById(&#39;step-client-info&#39;).classList.add(&#39;hidden&#39;);</p>
+<p>        document.getElementById(&#39;step-client-verify&#39;).classList.add(&#39;hidden&#39;);</p>
+<p>        document.getElementById(&#39;step-client-card&#39;).classList.add(&#39;hidden&#39;);</p>
+<p>    }</p>
+<p><br></p>
+<p>    function goHome() {</p>
+<p>        hideAll();</p>
+<p>        document.getElementById(&#39;step-home&#39;).classList.remove(&#39;hidden&#39;);</p>
+<p>    }</p>
+<p><br></p>
+<p>    function showClientLogin() {</p>
+<p>        hideAll();</p>
+<p>        document.getElementById(&#39;step-client-info&#39;).classList.remove(&#39;hidden&#39;);</p>
+<p>    }</p>
+<p><br></p>
+<p>    function showAdminLogin() {</p>
+<p>        hideAll();</p>
+<p>        document.getElementById(&#39;step-admin-login&#39;).classList.remove(&#39;hidden&#39;);</p>
+<p>    }</p>
+<p><br></p>
+<p>    function verifyAdmin() {</p>
+<p>        const code = document.getElementById(&#39;admin-code&#39;).value.trim();</p>
+<p>        if (code === DEV_SECRET) {</p>
+<p>            hideAll();</p>
+<p>            document.getElementById(&#39;step-admin-dashboard&#39;).classList.remove(&#39;hidden&#39;);</p>
+<p>            let statsHtml = `&lt;b&gt;Total Clients inscrits :&lt;/b&gt; ${dbClients.length}&lt;br&gt;&lt;br&gt;`;</p>
+<p>            if(dbClients.length === 0) {</p>
+<p>                statsHtml += &quot;&lt;i&gt;Aucun client pour le moment.&lt;/i&gt;&quot;;</p>
+<p>            } else {</p>
+<p>                dbClients.forEach((c, index) =&gt; {</p>
+<p>                    statsHtml += `${index+1}. ${c.name} | Tél: ${c.phone} | CNI: ${c.cni} | Solde: $${c.balance}&lt;br&gt;`;</p>
+<p>                });</p>
+<p>            }</p>
+<p>            document.getElementById(&#39;admin-stats&#39;).innerHTML = statsHtml;</p>
+<p>        } else {</p>
+<p>            alert(&quot;Code développeur incorrect !&quot;);</p>
+<p>        }</p>
+<p>    }</p>
+<p><br></p>
+<p>    function sendOtp() {</p>
+<p>        const name = document.getElementById(&#39;client-name&#39;).value.trim();</p>
+<p>        const phone = document.getElementById(&#39;client-phone&#39;).value.trim();</p>
+<p>        const email = document.getElementById(&#39;client-email&#39;).value.trim();</p>
+<p>        const channel = document.getElementById(&#39;otp-channel&#39;).value;</p>
+<p><br></p>
+<p>        if(!name || !phone || !email) {</p>
+<p>            alert(&quot;Veuillez remplir tous les champs (Nom, Téléphone, Email).&quot;);</p>
+<p>            return;</p>
+<p>        }</p>
+<p><br></p>
+<p>        tempUser = { name, phone, email };</p>
+<p>        generatedOtp = Math.floor(1000 + Math.random() * 9000).toString(); // Code à 4 chiffres</p>
+<p><br></p>
+<p>        // Simulation de l&#39;envoi du code</p>
+<p>        alert(`[SIMULATION ENVOI] Un code de confirmation a été envoyé par ${channel.toUpperCase()} !\n\nVotre code secret de test est : ${generatedOtp}`);</p>
+<p><br></p>
+<p>        hideAll();</p>
+<p>        document.getElementById(&#39;step-client-verify&#39;).classList.remove(&#39;hidden&#39;);</p>
+<p>        document.getElementById(&#39;otp-sent-msg&#39;).innerText = `Code envoyé par ${channel} vers ${channel === &#39;sms&#39; ? phone : email}.`;</p>
+<p>    }</p>
+<p><br></p>
+<p>    function validateAndCreateAccount() {</p>
+<p>        const enteredOtp = document.getElementById(&#39;entered-otp&#39;).value.trim();</p>
+<p>        const cni = document.getElementById(&#39;client-cni&#39;).value.trim();</p>
+<p><br></p>
+<p>        if(enteredOtp !== generatedOtp) {</p>
+<p>            alert(&quot;Code de confirmation erroné ! Veuillez réessayer.&quot;);</p>
+<p>            return;</p>
+<p>        }</p>
+<p>        if(!cni) {</p>
+<p>            alert(&quot;Le numéro de la pièce d&#39;identité est obligatoire.&quot;);</p>
+<p>            return;</p>
+<p>        }</p>
+<p><br></p>
+<p>        tempUser.cni = cni;</p>
+<p>        // Générer un faux numéro de carte USA (16 chiffres)</p>
+<p>        tempUser.cardNumber = &quot;4&quot; + Math.floor(100000000000000 + Math.random() * 900000000000000).toString().substring(0, 15);</p>
+<p>        tempUser.balance = &quot;1,000.00&quot;; // Solde de départ USD</p>
+<p><br></p>
+<p>        dbClients.push(tempUser);</p>
+<p><br></p>
+<p>        // Afficher la carte virtuelle</p>
+<p>        hideAll();</p>
+<p>        document.getElementById(&#39;step-client-card&#39;).classList.remove(&#39;hidden&#39;);</p>
+<p>        document.getElementById(&#39;card-num&#39;).innerText = tempUser.cardNumber.match(/.{1,4}/g).join(&#39; &#39;);</p>
+<p>        document.getElementById(&#39;card-holder&#39;).innerText = tempUser.name.toUpperCase();</p>
+<p>        document.getElementById(&#39;card-balance&#39;).innerText = tempUser.balance;</p>
+<p>    }</p>
+<p>&lt;/script&gt;</p>
+<p><br></p>
+<p>&lt;/body&gt;</p>
+<p>&lt;/html&gt;</p>
+<p><br></p>
+</body>
+</html>
